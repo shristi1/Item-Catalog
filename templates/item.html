@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+{% block title %}{{ item.name }} - {{ item.category.name }}{% endblock %}
+{% block header %}{{ item.name }} <a href="{{ url_for('showItems', category_id=item.category.id) }}"><small>({{ item.category.name }})</small></a>{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-6">
+        <h3>Description</h3>
+        <p>{{ item.description }}</p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <a href="{{url_for('editItem', category_id = category.id, item_id = item.id)}}">
+            <button class="btn btn-default" id="edit-item">
+                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>Edit 
+            </button>
+        </a>
+        <a href="{{url_for('deleteItem', category_id = category.id, item_id = item.id)}}">
+            <button class="btn btn-default delete" id="delete-item">
+                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>Delete
+            </button>
+        </a>
+        
+    </div>
+</div>
+{% endblock %}

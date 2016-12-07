@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+{% block title %}Edit Item{% endblock %}
+
+{% block header %}Edit Item '{{ item.name }}' <small>{{ item.category.name }}</small>{% endblock %}
+{% block content %}
+    <form method="POST" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" name="name" id="name" placeholder="enter the name" value="{{ item.name }}" />
+        </div>
+        <div class="form-group">
+            <label for="description">Name</label>
+            <textarea class="form-control" name="description" id="description" placeholder="enter the description" rows="3">{{ item.description }}</textarea>        
+        </div>
+
+    
+        <div>
+            <button type="submit" class="btn btn-primary">Save</button>
+            <a class="btn btn-default" href="{{ url_for('showItems', category_id=item.category.id) }}">Cancel</a>
+        </div>
+    </form>
+
+    
+{% endblock %}

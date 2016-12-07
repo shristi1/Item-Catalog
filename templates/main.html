@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+{% block title %}Latest Items{% endblock %}
+{% block header %}Latest Items{% endblock %}
+{% block content %}
+
+    {% if items %}
+    <div class="table-responsive">
+        <table class="table table-hover table-condensed">
+            <thead>
+                <tr>
+                    <th class="col-md-1">#</th>
+                    <th class="col-md-4">Item</th>
+                    <th>Category</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for item in items %}
+            <tr href="{{ url_for('showItem', category_id=item.category.id, item_id=item.id) }}" >
+                <td>{{ loop.index }}</td>
+                <td>{{ item.name }}</td>
+                <td>
+                    <a href="{{ url_for('showItems', category_id=item.category.id) }}">{{item.category.name }}</a>
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+        <p>
+            No items have been defined yet.
+            {%if 'username' in session %} 
+                Click <a href="{{ url_for('createItem')}}">here</a> to create a new item.
+            {% endif %}
+        </p>
+    {% endif %}
+
+    <script>
+        $( document ).ready(function() {
+            $('.table').find('tr').click(function(event) {
+                link = $(this).attr('href');
+                if (!link)
+                    return;
+                window.location.href = link;
+            });
+        });
+    </script>
+
+{% endblock %}

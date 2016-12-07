@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% block head %}
+    <title>{% block title %}{% endblock %} - Catalog App</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/static/style.css">
+
+    <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    {% endblock %} 
+</head>
+<body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{{ url_for('showCategories') }}">Catalog App</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="main-navbar">
+            {%if 'username' not in session %}
+                <form class="navbar-form navbar-right" action="{{url_for('showLogin')}}">
+                    <button type="submit" class="btn btn-primary">Sign in/Sign Up</button>
+                </form>
+            {% else %}
+                <form class="navbar-form navbar-right" action="{{ url_for('disconnect') }}">
+                    <button type="submit" class="btn btn-primary">Logout</button>
+                </form>
+            {% endif %}
+
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+
+<div class="container-fluid">
+<div class="row">
+    <div class="col-sm-3 col-md-2 sidebar" id ="list_of_categories">
+        <ul class="nav nav-sidebar">
+            <li>
+                <h4>Categories</h4>
+            </li>
+            {% for category in categories %}
+            <li>
+                <a href="{{ url_for('showItems', category_id=category.id) }}">{{ category.name }}</a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+        <h1 class="page-header">{% block header %}{% endblock %}</h1>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+            <div class='row'>
+                <div class="col-sm-12">
+                    <div class="alert alert-{{ category }} alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        {{ message }}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </div>
+</row>
+</div>
+</body>
+</html>
