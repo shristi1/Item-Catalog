@@ -4,6 +4,7 @@ An application that provides a list of items within a variety of categories incl
 
 ## How Do I Use This?
 To run this program locally on your computer:
+	
 	1. Make sure you have VirtualBox and Vagrant installed on your computer
 
 	2. In your terminal navigate to the vagrant folder in which the files for the catalog program are written.
